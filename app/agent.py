@@ -108,7 +108,8 @@ ATRACCIONES EN SAN DIEGO (base 4605 Voltaire St, Ocean Beach):
 - 20-30 min: La Jolla, Coronado Island, Gaslamp Quarter.
 
 RESUMEN DEL ITINERARIO (si lo piden, dalo compacto):
-6 jun (sab): Miranda llega a SAN (23:44).
+5 jun (vie): Miranda vuela SFO -> SAN (llega 23:44).
+6 jun (sab): San Diego (Miranda ya en SD).
 7 jun (dom): Fernanda y Zarela llegan a SAN via Panama (18:40).
 7-18 jun: San Diego (base en Ocean Beach).
 9-11 jun: posible Disneyland (tentativo).

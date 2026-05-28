@@ -9,7 +9,7 @@ recopilaron y conviene completarlos antes de viajar.
 TRIP_DATA: dict = {
     "general": {
         "destination": "San Diego, California, USA (con escapada a Yosemite, CA)",
-        "start_date": "2026-06-06",
+        "start_date": "2026-06-05",
         "end_date": "2026-06-25",
         "currency": "USD",
         "timezone": "America/Los_Angeles (Pacific Time, UTC-7)",
@@ -35,7 +35,7 @@ TRIP_DATA: dict = {
             "current_residence": "San Francisco, CA",
             "outbound_flight": {
                 "summary": "SFO -> SAN (Frontier Airlines)",
-                "date": "2026-06-06",  # sabado
+                "date": "2026-06-05",  # viernes
                 "airline": "Frontier Airlines",
                 "flight_number": "F94306",
                 "departure": "22:01 SFO",
@@ -253,7 +253,8 @@ TRIP_DATA: dict = {
     },
 
     "itinerary": [
-        {"date": "2026-06-06", "weekday": "sabado",    "summary": "Miranda vuela SFO -> SAN (llega 23:44)."},
+        {"date": "2026-06-05", "weekday": "viernes",   "summary": "Miranda vuela SFO -> SAN (llega 23:44)."},
+        {"date": "2026-06-06", "weekday": "sabado",    "summary": "San Diego, turismo libre (Miranda ya en SD)."},
         {"date": "2026-06-07", "weekday": "domingo",   "summary": "Fernanda y Zarela llegan a SAN desde Lima via Panama (18:40)."},
         {"date": "2026-06-08", "weekday": "lunes",     "summary": "San Diego, turismo libre."},
         {"date": "2026-06-09", "weekday": "martes",    "summary": "POSIBLE Disneyland (Anaheim) - tentativo, sin tickets aun."},
