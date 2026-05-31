@@ -1,137 +1,123 @@
-# travel-whatsapp-agent
+# 🌴 Travel WhatsApp Agent
 
-Servidor FastAPI que actua como un agente de WhatsApp para coordinar un viaje
-grupal. Recibe mensajes via webhook de Twilio, los procesa con Claude
-(Anthropic) usando como contexto los datos del viaje, y responde por WhatsApp.
+**Tired of being the group trip organizer who answers the same questions 47 times?**
 
-Es un MVP: historial de conversacion en memoria (se pierde al reiniciar), sin
-base de datos, datos del viaje en un archivo Python.
+"What time is checkout?" "What's the Airbnb address?" "Do we need cash or card?" "What are we doing Thursday?"
 
-## Requisitos previos
+You know the drill. You spend hours researching flights, hotels, and activities — and then spend the entire trip forwarding the same info over and over in WhatsApp.
 
-1. **Cuenta de Twilio** con WhatsApp Sandbox habilitado:
-   https://console.twilio.com → Messaging → Try it out → Send a WhatsApp message.
-   De ahi obtienes `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` y el numero del
-   sandbox (`whatsapp:+14155238886`).
-2. **Cuenta de Anthropic** con una API key:
-   https://console.anthropic.com → Settings → API Keys.
-3. **Python 3.11+**.
-4. **ngrok** (o equivalente) para exponer el servidor local a internet en dev:
-   https://ngrok.com/download.
+This agent fixes that. You dump all your trip details into one file, deploy it, and share the WhatsApp number with your travel group. Now everyone can ask the bot instead of you. It knows the itinerary, the accommodation, the activities, who's coming, emergency contacts — everything. And it answers instantly, 24/7, in whatever language your friends write in.
 
-## Setup paso a paso
+**You go from being the group's travel helpdesk to actually enjoying the trip.**
 
-```powershell
-# 1. Clonar
-git clone <repo-url> travel-whatsapp-agent
+## How it works
+
+A FastAPI server receives WhatsApp messages via Twilio's webhook, sends them to Claude (Anthropic) with your trip data as context, and replies back through WhatsApp. The agent knows who's messaging based on their phone number and can give personalized answers.
+
+```
+WhatsApp → Twilio → FastAPI → Claude API → Twilio → WhatsApp
+```
+
+## Quick start
+
+```bash
+# Clone and setup
+git clone https://github.com/MirandaCavalie/travel-whatsapp-agent.git
 cd travel-whatsapp-agent
-
-# 2. Crear y activar venv
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1   # PowerShell
-# source .venv/bin/activate    # bash/zsh
+source .venv/bin/activate  # Windows: .\.venv\Scripts\Activate.ps1
 
-# 3. Instalar dependencias
+# Install and configure
 pip install -r requirements.txt
+cp .env.example .env       # Fill in your API keys
 
-# 4. Configurar variables de entorno
-copy .env.example .env         # PowerShell
-# cp .env.example .env         # bash/zsh
-# Edita .env con tus credenciales reales
-
-# 5. Correr el servidor
+# Run
 uvicorn app.main:app --reload --port 8000
 ```
 
-Health check: `curl http://localhost:8000/health` → `{"status":"ok"}`.
+Health check: `GET /health` → `{"status": "ok"}`
 
-## Configurar el webhook de Twilio (sandbox)
+## Prerequisites
 
-1. Levanta tu servidor local en `http://localhost:8000`.
-2. En otra terminal, expon el puerto con ngrok:
-   ```bash
-   ngrok http 8000
-   ```
-   Copia la URL `https://xxxx-xxxx.ngrok-free.app`.
-3. (Opcional pero recomendado en prod) Pega esa URL en tu `.env` como
-   `PUBLIC_BASE_URL=https://xxxx-xxxx.ngrok-free.app` y reinicia uvicorn.
-   Sirve para que la validacion de firma de Twilio funcione detras del proxy.
-4. En la consola de Twilio: Messaging → Try it out → Send a WhatsApp message
-   → tab **Sandbox settings**.
-5. En **When a message comes in** pega:
-   `https://xxxx-xxxx.ngrok-free.app/webhook/whatsapp` (metodo `POST`).
-6. Save.
+- **Twilio account** with WhatsApp Sandbox enabled ([console.twilio.com](https://console.twilio.com))
+- **Anthropic API key** ([console.anthropic.com](https://console.anthropic.com))
+- **Python 3.11+**
 
-## Probar con el sandbox
+## Add your trip details
 
-1. Une tu numero al sandbox: manda el codigo `join <palabra-asignada>` desde
-   WhatsApp al `+1 415 523 8886`. Twilio te muestra la palabra exacta en la
-   consola.
-2. Escribe cualquier mensaje desde ese WhatsApp (ej: "donde nos quedamos?").
-3. Deberias ver en los logs del servidor:
-   `WhatsApp recibido from=whatsapp:+51... body='donde nos quedamos?'`
-   y recibir la respuesta del agente en WhatsApp.
+Edit `app/trip_data.py` with your actual trip info:
 
-Tips de debugging:
-- Si no responde, mira los logs de ngrok (`http://localhost:4040`) para ver
-  si Twilio llego al webhook y con que payload.
-- Errores 403 en logs = firma de Twilio invalida; revisa `PUBLIC_BASE_URL`.
+- **`general`** — destination, dates, currency, timezone, travel tips
+- **`travelers`** — one entry per person (name, phone in `+country...` format so the bot recognizes who's writing)
+- **`accommodation`** — hotel/Airbnb address, check-in/out, confirmation number
+- **`activities`** — day-by-day itinerary with times and locations
+- **`emergency`** — emergency contacts, travel insurance info
 
-## Pasar a produccion
+Changes take effect on the next message — no restart needed if running with `--reload`.
 
-1. **Registra un numero propio de WhatsApp Business** en Twilio (deja de usar
-   el sandbox). Documentacion:
-   https://www.twilio.com/docs/whatsapp/self-sign-up
-2. Actualiza `TWILIO_WHATSAPP_NUMBER` en `.env` con tu numero registrado:
-   `TWILIO_WHATSAPP_NUMBER=whatsapp:+51XXXXXXXXX`.
-3. Despliega el servidor en un host con HTTPS estable (Fly.io, Railway,
-   Render, Cloud Run, etc.). El servidor es un FastAPI standard:
-   `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
-4. Setea `ENVIRONMENT=production` y `PUBLIC_BASE_URL=https://tu-dominio` en
-   las env vars del host. Con `ENVIRONMENT=production`, los requests sin
-   firma valida de Twilio se rechazan con 403.
-5. En la configuracion del numero en Twilio Console, apunta el webhook
-   "When a message comes in" a `https://tu-dominio/webhook/whatsapp`.
-6. Considera que el historial vive en memoria: si reinicias o escalas a
-   varias instancias, se pierde / se desincroniza. Para algo mas serio,
-   migra `_history` en `app/agent.py` a Redis o Postgres.
+## Deploy to production
 
-## Agregar los datos reales del viaje
+This project is deploy-ready for [Render](https://render.com):
 
-Edita `app/trip_data.py`:
+1. Push your repo to GitHub
+2. Create a **Web Service** on Render, connect your repo
+3. Render auto-detects the `Dockerfile`
+4. Set your environment variables:
 
-- `TRIP_DATA["general"]`: destino, fechas, moneda, zona horaria, tips.
-- `TRIP_DATA["travelers"]`: una entrada por persona. **Importante:** el campo
-  `phone` debe coincidir EXACTAMENTE con el numero desde el que esa persona
-  envia WhatsApp (formato E.164 con `+`, sin espacios ni `whatsapp:`). Asi el
-  agente sabe quien le habla.
-- `TRIP_DATA["accommodation"]`: hotel/airbnb, direccion, fechas, confirmacion.
-- `TRIP_DATA["activities"]`: lista de actividades (fecha, hora, lugar, notas).
-- `TRIP_DATA["emergency"]`: contactos de emergencia, seguro.
+| Variable | Value |
+|---|---|
+| `ANTHROPIC_API_KEY` | Your Anthropic API key |
+| `TWILIO_ACCOUNT_SID` | From Twilio Console |
+| `TWILIO_AUTH_TOKEN` | From Twilio Console |
+| `TWILIO_WHATSAPP_NUMBER` | `whatsapp:+14155238886` (sandbox) |
+| `ENVIRONMENT` | `production` |
+| `PUBLIC_BASE_URL` | Your Render URL (e.g. `https://your-app.onrender.com`) |
 
-Despues de editar, reinicia uvicorn (`--reload` lo hace solo si lo dejaste
-corriendo). Todo cambio se refleja en el siguiente mensaje porque el system
-prompt se construye en cada llamada.
+5. In Twilio Console, set the webhook URL to `https://your-app.onrender.com/webhook/whatsapp` (POST)
 
-## Estructura
+## Local development with ngrok
+
+For testing locally, expose your server with [ngrok](https://ngrok.com):
+
+```bash
+# Terminal 1: run the server
+uvicorn app.main:app --reload --port 8000
+
+# Terminal 2: expose it
+ngrok http 8000
+```
+
+Copy the ngrok URL into Twilio's sandbox webhook settings.
+
+## Project structure
 
 ```
 travel-whatsapp-agent/
-├── .env.example
-├── .gitignore
+├── Dockerfile
+├── render.yaml
 ├── requirements.txt
-├── README.md
 └── app/
-    ├── __init__.py
-    ├── main.py        # FastAPI app + webhook
-    ├── config.py      # Carga de env vars
-    ├── whatsapp.py    # Envio via Twilio + chunking 1600 chars
-    ├── agent.py       # System prompt + llamada a Claude + historial
-    └── trip_data.py   # Datos del viaje (PLACEHOLDER, reemplazar)
+    ├── main.py          # FastAPI app + webhook endpoint
+    ├── config.py        # Environment variable loading
+    ├── whatsapp.py      # Twilio message sending + chunking
+    ├── agent.py         # Claude system prompt + conversation history
+    └── trip_data.py     # Your trip details (edit this!)
 ```
 
-## Endpoints
+## Limitations
 
-- `GET /health` → `{"status": "ok"}`.
-- `POST /webhook/whatsapp` → recibe form-encoded de Twilio (`From`, `Body`, ...),
-  procesa con el agente, responde TwiML.
+This is an MVP built for a specific trip:
+
+- Conversation history lives in memory (resets on deploy/restart)
+- Single-instance only (no shared state across workers)
+- No database — trip data is a Python dict
+
+For something more robust, you'd want to move the history to Redis or Postgres and the trip data to a proper database.
+
+## Built with
+
+- [FastAPI](https://fastapi.tiangolo.com/) — web framework
+- [Claude API](https://docs.anthropic.com/) — LLM for natural language responses
+- [Twilio](https://www.twilio.com/docs/whatsapp) — WhatsApp messaging
+- [Render](https://render.com/) — hosting
+
