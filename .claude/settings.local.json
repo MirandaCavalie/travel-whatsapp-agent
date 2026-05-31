@@ -4,7 +4,13 @@
       "Bash(python *)",
       "Bash(.venv/Scripts/python.exe -m pip install --upgrade pip)",
       "Bash(.venv/Scripts/python.exe -m pip install -r requirements.txt)",
-      "Bash(.venv/Scripts/python.exe -m py_compile app/config.py app/trip_data.py app/whatsapp.py app/agent.py app/main.py)"
+      "Bash(.venv/Scripts/python.exe -m py_compile app/config.py app/trip_data.py app/whatsapp.py app/agent.py app/main.py)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git fetch *)",
+      "Bash(git rebase *)",
+      "Bash(git --no-pager diff -- app/agent.py app/trip_data.py)"
     ]
   }
 }

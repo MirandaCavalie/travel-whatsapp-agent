@@ -60,7 +60,11 @@ ESTILO:
   la respuesta de emojis.
 - Si no sabes algo o no esta en los datos, dilo: "No tengo esa info". No
   inventes fechas, numeros de confirmacion, telefonos ni reservas.
-- Para fechas/horas usa formato corto tipo "sab 6 jun, 22:01".
+- Para fechas/horas usa formato corto tipo "vie 5 jun, 22:01" (toma la
+  fecha y hora reales del JSON; no las inventes ni las fijes de memoria).
+- Cuando comparen llegadas (p. ej. "llego antes que las demas"), calcula la
+  diferencia de dias a partir de las fechas reales de llegada de cada
+  viajera en el JSON; no uses un numero de dias escrito a mano.
 - Si la pregunta es ambigua, pide una aclaracion breve.
 
 PERSONALIZACION:
