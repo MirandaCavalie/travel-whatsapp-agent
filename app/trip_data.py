@@ -20,7 +20,7 @@ TRIP_DATA: dict = {
         "tips": [
             "El barrio Ocean Beach (base del viaje) esta junto a la playa, ambiente relajado.",
             "Uber/Lyft funcionan bien en San Diego. El trolley cubre algunas zonas.",
-            "Para Yosemite y Disneyland necesitan auto (rental o propio).",
+            "Para Yosemite y Universal Studios Hollywood necesitan auto (rental o propio).",
             "Voltaje 110V, enchufes tipo A/B (USA).",
             "Propina estandar 18-20% en restaurantes.",
         ],
@@ -233,6 +233,23 @@ TRIP_DATA: dict = {
             "discount": "Genius -18% aplicado antes de impuestos.",
             "distance_to_yosemite_south_entrance": "30 min en auto",
         },
+        {
+            "label": "Motel escapada Universal (LA)",
+            "name": "La Casa Motel, Los Angeles - Burbank Airport",
+            "address": "8065 San Fernando Road, Sun Valley, CA 91352, United States",
+            "phone": "+1 818-962-3269",
+            "booking_confirmation": "5502895308",
+            "guest_name": "Fernanda Jara",  # reserva a nombre de Fernanda
+            "check_in": "2026-06-13 desde las 14:00",  # sabado
+            "check_out": "2026-06-14 hasta las 10:00",  # domingo
+            "nights": 1,
+            "occupants": ["Miranda Cavalie", "Fernanda Jara"],
+            "notes": (
+                "Hospedaje para la escapada a Universal Studios Hollywood (13-14 jun). "
+                "SOLO Miranda y Fernanda; Zarela y Ariana se quedan en San Diego. "
+                "A ~2-2.5 h en auto de la base de San Diego (4605 Voltaire St)."
+            ),
+        },
     ],
 
     "parks_pass": {
@@ -257,12 +274,12 @@ TRIP_DATA: dict = {
         {"date": "2026-06-06", "weekday": "sabado",    "summary": "San Diego, turismo libre (Miranda ya en SD)."},
         {"date": "2026-06-07", "weekday": "domingo",   "summary": "Fernanda y Zarela llegan a SAN desde Lima via Panama (18:40)."},
         {"date": "2026-06-08", "weekday": "lunes",     "summary": "San Diego, turismo libre."},
-        {"date": "2026-06-09", "weekday": "martes",    "summary": "POSIBLE Disneyland (Anaheim) - tentativo, sin tickets aun."},
-        {"date": "2026-06-10", "weekday": "miercoles", "summary": "POSIBLE Disneyland - tentativo."},
-        {"date": "2026-06-11", "weekday": "jueves",    "summary": "POSIBLE Disneyland - tentativo."},
+        {"date": "2026-06-09", "weekday": "martes",    "summary": "San Diego, turismo libre."},
+        {"date": "2026-06-10", "weekday": "miercoles", "summary": "San Diego, turismo libre."},
+        {"date": "2026-06-11", "weekday": "jueves",    "summary": "San Diego, turismo libre."},
         {"date": "2026-06-12", "weekday": "viernes",   "summary": "San Diego, turismo libre."},
-        {"date": "2026-06-13", "weekday": "sabado",    "summary": "San Diego, turismo libre."},
-        {"date": "2026-06-14", "weekday": "domingo",   "summary": "San Diego, turismo libre."},
+        {"date": "2026-06-13", "weekday": "sabado",    "summary": "Miranda y Fernanda: drive SD -> LA. Universal Studios Hollywood (dia 1). Noche en La Casa Motel (Burbank). Zarela y Ariana se quedan en San Diego."},
+        {"date": "2026-06-14", "weekday": "domingo",   "summary": "Miranda y Fernanda: Universal Studios Hollywood (dia 2). Check-out motel antes de 10:00 y regreso a San Diego. Zarela y Ariana en San Diego."},
         {"date": "2026-06-15", "weekday": "lunes",     "summary": "San Diego, turismo libre."},
         {"date": "2026-06-16", "weekday": "martes",    "summary": "San Diego, turismo libre."},
         {"date": "2026-06-17", "weekday": "miercoles", "summary": "San Diego, preparar road trip a Yosemite."},
@@ -278,11 +295,25 @@ TRIP_DATA: dict = {
 
     "activities": [
         {
-            "name": "Disneyland (Anaheim)",
-            "date_range": "2026-06-09 a 2026-06-11",
-            "status": "TENTATIVO - sin tickets ni reservas. Confirmar pronto.",
-            "drive_from_san_diego": "~2 h en auto",
-            "notes": "Dos parques en el complejo: Disneyland Park y Disney California Adventure.",
+            "name": "Universal Studios Hollywood (Los Angeles)",
+            "date_range": "2026-06-13 a 2026-06-14",  # sabado y domingo
+            "status": "Confirmado (orden #UH00004JPS5).",
+            "order_confirmation": "UH00004JPS5",
+            "attendees": ["Miranda Cavalie", "Fernanda Jara"],
+            "who_note": (
+                "SOLO van Miranda y Fernanda. Zarela y Ariana se quedan en "
+                "San Diego esos dias."
+            ),
+            "drive_from_san_diego": "~2-2.5 h en auto a Burbank/Sun Valley (cada tramo).",
+            "lodging_note": (
+                "1 noche en La Casa Motel (Burbank Airport) la noche del 13 jun. "
+                "Ver 'accommodations'."
+            ),
+            "logistics": (
+                "Escapada DENTRO de la estadia en San Diego (7-18 jun). Suben a LA "
+                "el 13, vuelven el 14. La base de San Diego (4605 Voltaire St) se "
+                "mantiene; Zarela y Ariana siguen alli."
+            ),
         },
         {
             "name": "Yosemite National Park",
@@ -312,7 +343,7 @@ TRIP_DATA: dict = {
         "from_san_to_base": "SAN aeropuerto -> 4605 Voltaire St: 10-15 min en auto. Uber/Lyft directo.",
         "around_san_diego": (
             "Uber/Lyft funcionan bien. El trolley cubre algunas zonas. "
-            "Para excursiones (Disneyland, Yosemite) necesitan auto."
+            "Para excursiones (Universal Studios Hollywood, Yosemite) necesitan auto."
         ),
         "drives_key": {
             "san_diego_to_lax": "2-3 h (peor con trafico de LA)",
@@ -320,7 +351,7 @@ TRIP_DATA: dict = {
             "san_diego_to_sequoia": "5-6 h",
             "sequoia_to_oakhurst": "2-3 h",
             "oakhurst_to_yosemite_south_entrance": "30 min",
-            "san_diego_to_anaheim_disneyland": "~2 h",
+            "san_diego_to_burbank_sun_valley": "2-2.5 h (escapada a Universal Studios Hollywood)",
         },
         "fernanda_zarela_to_lax_24jun": {
             "deadline_salir_sd": "9:00-9:30 AM maximo el 24 jun",

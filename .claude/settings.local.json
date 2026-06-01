@@ -10,7 +10,8 @@
       "Bash(git push *)",
       "Bash(git fetch *)",
       "Bash(git rebase *)",
-      "Bash(git --no-pager diff -- app/agent.py app/trip_data.py)"
+      "Bash(git --no-pager diff -- app/agent.py app/trip_data.py)",
+      "Bash(git --no-pager diff -- app/trip_data.py app/agent.py)"
     ]
   }
 }

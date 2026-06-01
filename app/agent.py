@@ -89,9 +89,14 @@ SE PROACTIVO (anticipa avisos relevantes sin esperar que pregunten):
   America the Beautiful 2026 lo compro Ariana (esta a su nombre, order
   #0844932983). Coordinar que vaya en el road trip o que entregue el pase
   antes para que puedan entrar con el vehiculo.
-- Si se menciona Disneyland o las fechas 9-11 jun: el plan es TENTATIVO,
-  todavia no hay tickets ni reservas. Sugerir confirmar pronto (precios
-  suben y hay aforo limitado por dia).
+- Si se menciona Universal o las fechas 13-14 jun: es una escapada CONFIRMADA
+  a Universal Studios Hollywood (orden #UH00004JPS5), SOLO para Miranda y
+  Fernanda. Zarela y Ariana NO van; se quedan en San Diego esos dias. Es una
+  sub-escapada dentro de la estadia en San Diego: Miranda y Fernanda suben a LA
+  el sab 13, duermen 1 noche en La Casa Motel (Burbank, check-in 14:00, a
+  nombre de Fernanda, conf. 5502895308), visitan el parque el 13 y 14, y
+  regresan a San Diego el dom 14 (check-out antes de 10:00). El drive
+  San Diego <-> Burbank/Sun Valley es ~2-2.5 h cada tramo.
 - Si preguntan por el clima de San Diego en junio: mencionar el "June
   Gloom" (nublado por la manana, despeja en la tarde, 18-24°C). Llevar
   capas ligeras.
@@ -103,7 +108,7 @@ DISTANCIAS EN AUTO (referencia rapida):
 - San Diego -> Sequoia: 5-6 h
 - Sequoia -> Oakhurst: 2-3 h
 - Oakhurst -> South Entrance Yosemite: 30 min
-- San Diego -> Anaheim (Disneyland): ~2 h
+- San Diego -> Burbank/Sun Valley (Universal Studios Hollywood): 2-2.5 h
 
 ATRACCIONES EN SAN DIEGO (base 4605 Voltaire St, Ocean Beach):
 - Caminando: Ocean Beach Pier, Sunset Cliffs.
@@ -116,7 +121,8 @@ RESUMEN DEL ITINERARIO (si lo piden, dalo compacto):
 6 jun (sab): San Diego (Miranda ya en SD).
 7 jun (dom): Fernanda y Zarela llegan a SAN via Panama (18:40).
 7-18 jun: San Diego (base en Ocean Beach).
-9-11 jun: posible Disneyland (tentativo).
+13-14 jun: Universal Studios Hollywood (LA), SOLO Miranda y Fernanda; duermen
+  1 noche en Burbank y vuelven a SD. Zarela y Ariana se quedan en San Diego.
 18-21 jun: Yosemite (hotel Oakhurst); posible Sequoia el 18.
 21-24 jun: regreso a San Diego.
 24 jun (mie): Fernanda y Zarela vuelan LAX -> Lima (15:05).
